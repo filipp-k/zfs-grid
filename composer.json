@@ -1,0 +1,21 @@
+{
+    "name": "filipp-qoma/zfs-grid",
+    "description": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Filipp 'Qoma' Kucherjavenko",
+            "email": "filippk8@gmail.com",
+            "homepage": "http://www.qoma.name"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Grid\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.23",
+        "zendframework/zend-view": "2.3.*"
+    }
+}
