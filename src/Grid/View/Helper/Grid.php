@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Qoma
- * Date: 10/06/14
- * Time: 13:56
- */
 
 namespace ZFS\Grid\View\Helper;
 
@@ -17,6 +11,11 @@ use ZFS\Grid\View\Model\GridModel;
  */
 class Grid extends AbstractHelper
 {
+    /**
+     * @param GridModel $grid
+     *
+     * @return $this|string
+     */
     public function __invoke(GridModel $grid = null)
     {
         if ($grid) {
@@ -26,6 +25,11 @@ class Grid extends AbstractHelper
         }
     }
 
+    /**
+     * @param GridModel $grid
+     *
+     * @return string
+     */
     public function render(GridModel $grid)
     {
         $output = $this->openTag($grid);
@@ -37,6 +41,11 @@ class Grid extends AbstractHelper
         return $output;
     }
 
+    /**
+     * @param GridModel $grid
+     *
+     * @return string
+     */
     public function openTag(GridModel $grid)
     {
         $output = '<table';
@@ -58,6 +67,9 @@ class Grid extends AbstractHelper
         return $output;
     }
 
+    /**
+     * @return string
+     */
     public function closeTag()
     {
         return '</table>';

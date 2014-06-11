@@ -1,18 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Qoma
- * Date: 10/06/14
- * Time: 13:56
- */
 
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
 use ZFS\Grid\View\Model\ColumnModel;
 
-class GridRowValue  extends AbstractHelper
+/**
+ * Class GridRowValue
+ * @package ZFS\Grid\View\Helper
+ */
+class GridRowValue extends AbstractHelper
 {
+    /**
+     * @param mixed       $row
+     * @param ColumnModel $column
+     *
+     * @return mixed|null
+     */
     public function __invoke($row, ColumnModel $column)
     {
         $value = null;

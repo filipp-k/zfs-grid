@@ -2,6 +2,10 @@
 
 namespace ZFS\Grid\View\Model;
 
+/**
+ * Class GridModel
+ * @package ZFS\Grid\View\Model
+ */
 class GridModel
 {
     /** @var  string */

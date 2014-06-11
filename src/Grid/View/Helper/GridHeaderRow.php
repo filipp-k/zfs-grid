@@ -1,17 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Qoma
- * Date: 10/06/14
- * Time: 13:56
- */
 
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use ZFS\Grid\View\Model\ColumnModel;
 
+/**
+ * Class GridHeaderRow
+ * @package ZFS\Grid\View\Helper
+ */
 class GridHeaderRow extends AbstractHelper
 {
+    /**
+     * @param ColumnModel[] $columns
+     *
+     * @return string
+     */
     public function __invoke(array $columns)
     {
         $output = '<tr>';

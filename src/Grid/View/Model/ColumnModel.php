@@ -2,6 +2,10 @@
 
 namespace ZFS\Grid\View\Model;
 
+/**
+ * Class ColumnModel
+ * @package ZFS\Grid\View\Model
+ */
 class ColumnModel extends \stdClass
 {
     /** @var  string */

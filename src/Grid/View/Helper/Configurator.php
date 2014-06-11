@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Qoma
- * Date: 10/06/14
- * Time: 20:35
- */
 
 namespace ZFS\Grid\View\Helper;
 
@@ -13,6 +7,10 @@ use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Mvc\MvcEvent;
 use Zend\View\HelperPluginManager;
 
+/**
+ * Class Configurator
+ * @package ZFS\Grid\View\Helper
+ */
 class Configurator implements ListenerAggregateInterface
 {
     /**
@@ -68,6 +66,9 @@ class Configurator implements ListenerAggregateInterface
         }
     }
 
+    /**
+     * @param MvcEvent $event
+     */
     public function onBootstrap(MvcEvent $event)
     {
         /** @var HelperPluginManager $viewHelperManager */

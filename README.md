@@ -123,7 +123,7 @@ $column->setTitle('User name');
 - gridHeader - отображение блока ```<thead>```;
 - gridHeaderRow - отображение строки заголовка: ```<tr><th>...</th></tr>```;
 - gridHeaderCell - отображение ячейки строки заголовка: ```<th>..</th>```;
-- gridBody - отображение блока ```<tbody>``;
+- gridBody - отображение блока ```<tbody>```;
 - gridBodyRow - отображение строки тела: ```<tr><td>...<td></tr>```;
 - gridBodyCell - отображение ячейки строки тела: ```<td>...</td>```;
 - gridFooter - отображение блока ```<tfoot>```;
