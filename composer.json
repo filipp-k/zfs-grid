@@ -10,8 +10,8 @@
         }
     ],
     "autoload": {
-        "psr-0": {
-            "Grid\\": "src/"
+        "psr-4": {
+            "ZFS\\Grid\\": "src/Grid"
         }
     },
     "require": {
