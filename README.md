@@ -10,11 +10,11 @@ zfs-grid
 ```php
 'service_manager' => array(
     'invokables' => array(
-        'GridViewHelpersConfigurator' => 'ZFS\Grid\View\Helper\Configurator'
+        'ZFS\Grid\View\Helper\Configurator' => 'ZFS\Grid\View\Helper\Configurator'
     )
 ),
 'listeners' => array(
-    'GridViewHelpersConfigurator'
+    'ZFS\Grid\View\Helper\Configurator'
 )
 ```
 Ключ можно выбрать любой другой, если есть необходимость.
