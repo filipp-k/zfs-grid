@@ -17,7 +17,7 @@ class GridModel
     /** @var  string */
     protected $style;
 
-    /** @var array  */
+    /** @var array */
     protected $customs = array();
 
     /** @var  array */
@@ -128,27 +128,92 @@ class GridModel
      */
     public function getColumns()
     {
+        usort(
+            $this->columns,
+            function ($a, $b) {
+                /** @var ColumnModel $a */
+                /** @var ColumnModel $b */
+                return $a->getSortOrder() >= $b->getSortOrder();
+            }
+        );
+
         return $this->columns;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     * @return null|ColumnModel
+     */
+    public function getColumn($name)
+    {
+        if (array_key_exists($name, $this->columns)) {
+            return $this->columns[$name];
+        } else {
+            throw new \InvalidArgumentException(
+                'There is no column with name "' . $name .'"'
+            );
+        }
     }
 
     /**
      * @param ColumnModel[]|mixed $columns
      *
+     * @return $this
      * @throws \InvalidArgumentException
      */
     public function setColumns($columns)
     {
-        foreach ($columns as &$value) {
-            if (is_array($value)) {
-                $value = new ColumnModel($value);
-            }
+        $this->columns = [];
 
-            if (!($value instanceof ColumnModel)) {
-                throw new \InvalidArgumentException('Array value must be an array or ColumnModel instance');
-            }
+        foreach ($columns as &$value) {
+            $this->addColumn($value);
         }
 
-        $this->columns = $columns;
+        return $this;
+    }
+
+    /**
+     * @param ColumnModel|array $column
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function addColumn($column)
+    {
+        if (is_array($column)) {
+            $column = new ColumnModel($column);
+        }
+
+        if ($column instanceof ColumnModel) {
+            $this->columns[$column->getName()] = $column;
+        } else {
+            throw new \InvalidArgumentException(
+                'Array value must be an correct array of column options or ColumnModel instance'
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function removeColumn($name)
+    {
+        if (array_key_exists($name, $this->columns)) {
+            unset ($this->columns[$name]);
+        } else {
+            throw new \InvalidArgumentException(
+                'There is no column with name "' . $name .'"'
+            );
+        }
+
+        return $this;
     }
 
     /**

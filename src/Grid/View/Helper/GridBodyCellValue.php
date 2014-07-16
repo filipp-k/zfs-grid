@@ -6,10 +6,10 @@ use Zend\View\Helper\AbstractHelper;
 use ZFS\Grid\View\Model\ColumnModel;
 
 /**
- * Class GridRowValue
+ * Class GridBodyCellValue
  * @package ZFS\Grid\View\Helper
  */
-class GridRowValue extends AbstractHelper
+class GridBodyCellValue extends AbstractHelper
 {
     /**
      * @param mixed       $row
@@ -29,7 +29,7 @@ class GridRowValue extends AbstractHelper
             }
         }
 
-        $closure = $column->getFormatter();
+        $closure = $column->getCellFormatter();
         if (is_callable($closure)) {
             $value = call_user_func($closure, $value, $row, $column);
         }

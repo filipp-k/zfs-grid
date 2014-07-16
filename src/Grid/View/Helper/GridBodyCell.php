@@ -19,6 +19,6 @@ class GridBodyCell extends AbstractHelper
      */
     public function __invoke($row, ColumnModel $column)
     {
-        return '<td>' . $this->getView()->gridRowValue($row, $column) . '</td>';
+        return '<td>' . $this->getView()->gridBodyCellValue($row, $column) . '</td>';
     }
 }

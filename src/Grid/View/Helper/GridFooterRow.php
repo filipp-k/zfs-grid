@@ -9,7 +9,7 @@ use ZFS\Grid\View\Model\ColumnModel;
  * Class GridFooterRow
  * @package ZFS\Grid\View\Helper
  */
-class GridFooterRow  extends AbstractHelper
+class GridFooterRow extends AbstractHelper
 {
     /**
      * @param ColumnModel[] $columns

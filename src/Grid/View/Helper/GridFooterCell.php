@@ -32,7 +32,7 @@ class GridFooterCell extends AbstractHelper
             $output .= ' style="' . $column->getStyle() . '"';
         }
 
-        $output .= '>' . $column->getTitle() . '</th>';
+        $output .= '>' . $this->getView()->gridFooterCellValue($column) . '</th>';
 
         return $output;
     }

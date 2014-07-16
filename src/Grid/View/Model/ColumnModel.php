@@ -2,12 +2,18 @@
 
 namespace ZFS\Grid\View\Model;
 
+use Zend\Filter\Word\UnderscoreToCamelCase;
+
 /**
  * Class ColumnModel
  * @package ZFS\Grid\View\Model
  */
-class ColumnModel extends \stdClass
+class ColumnModel
 {
+    const SORTED_NONE = '';
+    const SORTED_ASC  = 'asc';
+    const SORTED_DESC = 'desc';
+
     /** @var  string */
     protected $name;
 
@@ -27,7 +33,16 @@ class ColumnModel extends \stdClass
     protected $fieldName;
 
     /** @var  callable */
-    protected $formatter;
+    protected $cellFormatter;
+
+    /** @var  callable */
+    protected $titleFormatter;
+
+    /** @var  string */
+    protected $sorted = self::SORTED_NONE;
+
+    /** @var  int */
+    protected $sortOrder = 0;
 
     /** @var  array */
     protected $customs;
@@ -37,7 +52,9 @@ class ColumnModel extends \stdClass
      */
     public function __construct($options = array())
     {
+        $utc = new UnderscoreToCamelCase();
         foreach ($options as $key => &$value) {
+            $key        = $utc->filter($key);
             $this->$key = $value;
         }
     }
@@ -192,20 +209,90 @@ class ColumnModel extends \stdClass
     /**
      * @return callable
      */
-    public function getFormatter()
+    public function getCellFormatter()
     {
-        return $this->formatter;
+        return $this->cellFormatter;
     }
 
     /**
-     * @param callable $cellConstructCallback
+     * @param callable $cellFormatter
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function setCellFormatter($cellFormatter)
+    {
+        if (is_callable($cellFormatter)) {
+            $this->cellFormatter = $cellFormatter;
+        } else {
+            throw new \InvalidArgumentException('Cell formatter must be a callable object');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param callable $titleFormatter
+     *
+     * @throws \InvalidArgumentException
+     * @return $this
+     */
+    public function setTitleFormatter($titleFormatter)
+    {
+        if (is_callable($titleFormatter)) {
+            $this->titleFormatter = $titleFormatter;
+        } else {
+            throw new \InvalidArgumentException('Title formatter must be a callable object');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return callable
+     */
+    public function getTitleFormatter()
+    {
+        return $this->titleFormatter;
+    }
+
+    /**
+     * @param string $sorted
      *
      * @return $this
      */
-    public function setFormatter($cellConstructCallback)
+    public function setSorted($sorted)
     {
-        $this->formatter = $cellConstructCallback;
+        $this->sorted = $sorted;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSorted()
+    {
+        return $this->sorted;
+    }
+
+    /**
+     * @param int $sortOrder
+     *
+     * @return $this
+     */
+    public function setSortOrder($sortOrder)
+    {
+        $this->sortOrder = $sortOrder;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSortOrder()
+    {
+        return $this->sortOrder;
     }
 }

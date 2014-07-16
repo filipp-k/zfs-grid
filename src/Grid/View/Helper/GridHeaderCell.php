@@ -32,7 +32,7 @@ class GridHeaderCell extends AbstractHelper
             $output .= ' style="' . $column->getStyle() . '"';
         }
 
-        $output .= '>' . $column->getTitle() . '</th>';
+        $output .= '>' . $this->getView()->gridHeaderCellValue($column) . '</th>';
 
         return $output;
     }
