@@ -24,10 +24,16 @@ class ColumnModel
     protected $id;
 
     /** @var  string */
-    protected $css;
+    protected $cellCss;
 
     /** @var  string */
-    protected $style;
+    protected $titleCss;
+
+    /** @var  string */
+    protected $cellStyle;
+
+    /** @var  string */
+    protected $titleStyle;
 
     /** @var  string */
     protected $fieldName;
@@ -151,9 +157,9 @@ class ColumnModel
      *
      * @return $this
      */
-    public function setCss($css)
+    public function setCellCss($css)
     {
-        $this->css = $css;
+        $this->cellCss = $css;
 
         return $this;
     }
@@ -161,9 +167,9 @@ class ColumnModel
     /**
      * @return string
      */
-    public function getCss()
+    public function getCellCss()
     {
-        return $this->css;
+        return $this->cellCss;
     }
 
     /**
@@ -171,9 +177,9 @@ class ColumnModel
      *
      * @return $this
      */
-    public function setStyle($style)
+    public function setCellStyle($style)
     {
-        $this->style = $style;
+        $this->cellStyle = $style;
 
         return $this;
     }
@@ -181,9 +187,49 @@ class ColumnModel
     /**
      * @return string
      */
-    public function getStyle()
+    public function getCellStyle()
     {
-        return $this->style;
+        return $this->cellStyle;
+    }
+
+    /**
+     * @param string $titleCss
+     *
+     * @return $this
+     */
+    public function setTitleCss($titleCss)
+    {
+        $this->titleCss = $titleCss;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleCss()
+    {
+        return $this->titleCss;
+    }
+
+    /**
+     * @param string $titleStyle
+     *
+     * @return $this
+     */
+    public function setTitleStyle($titleStyle)
+    {
+        $this->titleStyle = $titleStyle;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleStyle()
+    {
+        return $this->titleStyle;
     }
 
     /**

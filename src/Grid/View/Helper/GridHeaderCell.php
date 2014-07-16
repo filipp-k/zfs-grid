@@ -18,21 +18,23 @@ class GridHeaderCell extends AbstractHelper
      */
     public function __invoke(ColumnModel $column)
     {
+        $value = $this->getView()->gridHeaderCellValue($column);
+
         $output = '<th';
 
         if ($column->getId()) {
             $output .= ' id="' . $column->getId() . '"';
         }
 
-        if ($column->getCss()) {
-            $output .= ' class="' . $column->getCss() . '"';
+        if ($column->getTitleCss()) {
+            $output .= ' class="' . $column->getTitleCss() . '"';
         }
 
-        if ($column->getStyle()) {
-            $output .= ' style="' . $column->getStyle() . '"';
+        if ($column->getTitleStyle()) {
+            $output .= ' style="' . $column->getTitleStyle() . '"';
         }
 
-        $output .= '>' . $this->getView()->gridHeaderCellValue($column) . '</th>';
+        $output .= '>' . $value . '</th>';
 
         return $output;
     }

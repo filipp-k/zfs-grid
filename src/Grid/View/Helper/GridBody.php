@@ -19,8 +19,11 @@ class GridBody extends AbstractHelper
     public function __invoke(GridModel $grid)
     {
         $output = '<tbody>';
-        foreach ($grid->getRows() as $row) {
-            $output .= $this->getView()->gridBodyRow($row, $grid->getColumns());
+        $rows   = $grid->getRows();
+        if ($rows instanceof \Traversable || is_array($rows)) {
+            foreach ($rows as $row) {
+                $output .= $this->getView()->gridBodyRow($row, $grid->getColumns());
+            }
         }
         $output .= '</tbody>';
 

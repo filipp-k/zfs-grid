@@ -124,37 +124,26 @@ class GridModel
     }
 
     /**
-     * @return ColumnModel[]
+     *
      */
-    public function getColumns()
+    public function sortColumns()
     {
-        usort(
+        uasort(
             $this->columns,
             function ($a, $b) {
                 /** @var ColumnModel $a */
                 /** @var ColumnModel $b */
-                return $a->getSortOrder() >= $b->getSortOrder();
+                return $a->getSortOrder() > $b->getSortOrder();
             }
         );
-
-        return $this->columns;
     }
 
     /**
-     * @param string $name
-     *
-     * @throws \InvalidArgumentException
-     * @return null|ColumnModel
+     * @return ColumnModel[]
      */
-    public function getColumn($name)
+    public function getColumns()
     {
-        if (array_key_exists($name, $this->columns)) {
-            return $this->columns[$name];
-        } else {
-            throw new \InvalidArgumentException(
-                'There is no column with name "' . $name .'"'
-            );
-        }
+        return $this->columns;
     }
 
     /**
@@ -172,6 +161,33 @@ class GridModel
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasColumn($name)
+    {
+        return array_key_exists($name, $this->columns);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     * @return null|ColumnModel
+     */
+    public function getColumn($name)
+    {
+        if ($this->hasColumn($name)) {
+            return $this->columns[$name];
+        } else {
+            throw new \InvalidArgumentException(
+                'There is no column with name "' . $name . '"'
+            );
+        }
     }
 
     /**
@@ -209,7 +225,7 @@ class GridModel
             unset ($this->columns[$name]);
         } else {
             throw new \InvalidArgumentException(
-                'There is no column with name "' . $name .'"'
+                'There is no column with name "' . $name . '"'
             );
         }
 
