@@ -1,9 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\GridModel;
+use ZFS\Grid\View\Model;
 
 /**
  * Class GridHeader
@@ -12,16 +11,42 @@ use ZFS\Grid\View\Model\GridModel;
 class GridHeader extends AbstractHelper
 {
     /**
-     * @param GridModel $grid
+     * @param Model\Grid $grid
      *
      * @return string
      */
-    public function __invoke(GridModel $grid)
+    public function __invoke(Model\Grid $grid)
     {
-        $output = '<thead>';
-        $output .= $this->getView()->gridHeaderRow($grid->getColumns());
-        $output .= '</thead>';
+        $grid->format();
+
+        $row = $this->getView()->gridHeaderRow($grid->columns);
+
+        return $this->openTag($grid) . $row . $this->closeTag();
+    }
+
+    /**
+     * @param Model\Grid $grid
+     *
+     * @return string
+     */
+    public function openTag(Model\Grid $grid)
+    {
+        $grid->format();
+
+        $output = '<thead';
+        foreach ($grid->thead as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
+        }
+        $output .= '>';
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function closeTag()
+    {
+        return '</thead>';
     }
 }

@@ -1,9 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\ColumnModel;
+use ZFS\Grid\View\Model;
 
 /**
  * Class GridBodyCell
@@ -12,27 +11,38 @@ use ZFS\Grid\View\Model\ColumnModel;
 class GridBodyCell extends AbstractHelper
 {
     /**
-     * @param mixed       $row
-     * @param ColumnModel $column
+     * @param Model\Cell $cell
      *
      * @return string
      */
-    public function __invoke($row, ColumnModel $column)
+    public function __invoke(Model\Cell $cell)
     {
-        $value = $this->getView()->gridBodyCellValue($row, $column);
+        return $this->openTag($cell) . $cell->value . $this->closeTag();
+    }
+
+    /**
+     * @param Model\Cell $cell
+     *
+     * @return string
+     */
+    public function openTag(Model\Cell $cell)
+    {
+        $cell->format();
 
         $output = '<td';
-
-        if ($column->getCellCss()) {
-            $output .= ' class="' . $column->getCellCss() . '"';
+        foreach ($cell->getAttributes() as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
         }
-
-        if ($column->getCellStyle()) {
-            $output .= ' style="' . $column->getCellStyle() . '"';
-        }
-
-        $output .= '>' . $value . '</th>';
+        $output .= '>';
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function closeTag()
+    {
+        return '</th>';
     }
 }

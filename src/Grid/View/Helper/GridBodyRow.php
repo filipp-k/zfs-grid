@@ -1,8 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
+use ZFS\Grid\View\Model;
 
 /**
  * Class GridBodyRow
@@ -11,19 +11,45 @@ use Zend\View\Helper\AbstractHelper;
 class GridBodyRow extends AbstractHelper
 {
     /**
-     * @param       $row
-     * @param array $columns
+     * @param Model\Row $row
      *
      * @return string
      */
-    public function __invoke($row, array $columns)
+    public function __invoke(Model\Row $row)
     {
-        $output = '<tr>';
-        foreach ($columns as $column) {
-            $output .= $this->getView()->gridBodyCell($row, $column);
+        $row->format();
+
+        $cells = '';
+        foreach ($row->cells as $cell) {
+            $cells .= $this->getView()->gridBodyCell($cell);
         }
-        $output .= '</tr>';
+
+        return $this->openTag($row) . $cells . $this->closeTag();
+    }
+
+    /**
+     * @param Model\Row $row
+     *
+     * @return string
+     */
+    public function openTag(Model\Row $row)
+    {
+        $row->format();
+
+        $output = '<tr';
+        foreach ($row->getAttributes() as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
+        }
+        $output .= '>';
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function closeTag()
+    {
+        return '</tr>';
     }
 }

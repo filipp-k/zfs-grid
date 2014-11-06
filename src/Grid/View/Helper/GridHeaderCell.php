@@ -1,9 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\ColumnModel;
+use ZFS\Grid\View\Model;
 
 /**
  * Class GridHeaderCell
@@ -12,29 +11,19 @@ use ZFS\Grid\View\Model\ColumnModel;
 class GridHeaderCell extends AbstractHelper
 {
     /**
-     * @param ColumnModel $column
+     * @param Model\Column $column
      *
      * @return string
      */
-    public function __invoke(ColumnModel $column)
+    public function __invoke(Model\Column $column)
     {
-        $value = $this->getView()->gridHeaderCellValue($column);
+        $columnAttributes = $column->getAttributes();
 
         $output = '<th';
-
-        if ($column->getId()) {
-            $output .= ' id="' . $column->getId() . '"';
+        foreach ($columnAttributes as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
         }
-
-        if ($column->getTitleCss()) {
-            $output .= ' class="' . $column->getTitleCss() . '"';
-        }
-
-        if ($column->getTitleStyle()) {
-            $output .= ' style="' . $column->getTitleStyle() . '"';
-        }
-
-        $output .= '>' . $value . '</th>';
+        $output .= '>' . $column->title . '</th>';
 
         return $output;
     }

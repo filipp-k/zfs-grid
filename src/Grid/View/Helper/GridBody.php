@@ -1,9 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\GridModel;
+use ZFS\Grid\View\Model;
 
 /**
  * Class GridBody
@@ -12,21 +11,45 @@ use ZFS\Grid\View\Model\GridModel;
 class GridBody extends AbstractHelper
 {
     /**
-     * @param GridModel $grid
+     * @param Model\Grid $grid
      *
      * @return string
      */
-    public function __invoke(GridModel $grid)
+    public function __invoke(Model\Grid $grid)
     {
-        $output = '<tbody>';
-        $rows   = $grid->getRows();
-        if ($rows instanceof \Traversable || is_array($rows)) {
-            foreach ($rows as $row) {
-                $output .= $this->getView()->gridBodyRow($row, $grid->getColumns());
-            }
+        $grid->format();
+
+        $rows = '';
+        foreach ($grid->rows as $row) {
+            $rows .= $this->getView()->gridBodyRow($row);
         }
-        $output .= '</tbody>';
+
+        return $this->openTag($grid) . $rows . $this->closeTag();
+    }
+
+    /**
+     * @param Model\Grid $grid
+     *
+     * @return string
+     */
+    public function openTag(Model\Grid $grid)
+    {
+        $grid->format();
+
+        $output = '<tbody';
+        foreach ($grid->tbody as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
+        }
+        $output .= '>';
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function closeTag()
+    {
+        return '</tbody>';
     }
 }

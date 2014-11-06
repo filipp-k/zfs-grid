@@ -1,22 +1,22 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\GridModel;
+use \ZFS\Grid\View\Model;
 
 /**
  * Class Grid
+ *
  * @package ZFS\Grid\View\Helper
  */
 class Grid extends AbstractHelper
 {
     /**
-     * @param GridModel $grid
+     * @param Model\Grid $grid
      *
      * @return $this|string
      */
-    public function __invoke(GridModel $grid = null)
+    public function __invoke(Model\Grid $grid = null)
     {
         if ($grid) {
             return $this->render($grid);
@@ -26,42 +26,35 @@ class Grid extends AbstractHelper
     }
 
     /**
-     * @param GridModel $grid
+     * @param Model\Grid $grid
      *
      * @return string
      */
-    public function render(GridModel $grid)
+    public function render(Model\Grid $grid)
     {
-        $output = $this->openTag($grid);
-        $output .= $this->getView()->gridHeader($grid);
-        $output .= $this->getView()->gridBody($grid);
-        $output .= $this->getView()->gridFooter($grid);
-        $output .= $this->closeTag();
+        $grid->format();
 
-        return $output;
+        $body = $this->getView()->gridBody($grid);
+        $header = $this->getView()->gridHeader($grid);
+        $footer = $this->getView()->gridFooter($grid);
+
+
+        return $this->openTag($grid) . $header . $body . $footer . $this->closeTag();
     }
 
     /**
-     * @param GridModel $grid
+     * @param Model\Grid $grid
      *
      * @return string
      */
-    public function openTag(GridModel $grid)
+    public function openTag(Model\Grid $grid)
     {
+        $grid->format();
+
         $output = '<table';
-
-        if ($grid->getId()) {
-            $output .= ' id="' . $grid->getId() . '"';
+        foreach ($grid->getAttributes() as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
         }
-
-        if ($grid->getCss()) {
-            $output .= ' class="' . $grid->getCss() . '"';
-        }
-
-        if ($grid->getStyle()) {
-            $output .= ' style="' . $grid->getStyle() . '"';
-        }
-
         $output .= '>';
 
         return $output;

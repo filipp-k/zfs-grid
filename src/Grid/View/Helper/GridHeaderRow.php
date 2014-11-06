@@ -1,9 +1,8 @@
 <?php
-
 namespace ZFS\Grid\View\Helper;
 
 use Zend\View\Helper\AbstractHelper;
-use ZFS\Grid\View\Model\ColumnModel;
+use ZFS\Grid\View\Collection;
 
 /**
  * Class GridHeaderRow
@@ -12,18 +11,43 @@ use ZFS\Grid\View\Model\ColumnModel;
 class GridHeaderRow extends AbstractHelper
 {
     /**
-     * @param ColumnModel[] $columns
+     * @param Collection\Columns $columns
      *
      * @return string
      */
-    public function __invoke(array $columns)
+    public function __invoke(Collection\Columns $columns)
     {
-        $output = '<tr>';
+        $columns->format();
+
+        $cells = '';
         foreach ($columns as $column) {
-            $output .= $this->getView()->gridHeaderCell($column);
+            $cells .= $this->getView()->gridHeaderCell($column);
         }
-        $output .= '</tr>';
+
+        return $this->openTag($columns) . $cells . $this->closeTag();
+    }
+
+    /**
+     * @param Collection\Columns $columns
+     *
+     * @return string
+     */
+    public function openTag(Collection\Columns $columns)
+    {
+        $output = '<tr';
+        foreach ($columns->getAttributes() as $key => $value) {
+            $output .= sprintf(' %s="%s" ', $key, $value);
+        }
+        $output .= '>';
 
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function closeTag()
+    {
+        return '</tr>';
     }
 }
