@@ -11,7 +11,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "ZFS\\Grid\\": "src/Grid"
+      "ZFS\\Grid\\": "src/"
     },
     "classmap": ["Module.php"]
   },
